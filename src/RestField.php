@@ -81,7 +81,7 @@ final class RestField {
 	 *
 	 * @return true|\WP_Error True on success, WP_Error on validation failure.
 	 */
-	public function update( mixed $value, \WP_Post $post, string $field, WP_REST_Request $request ): true|\WP_Error { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter -- $field and $request required by register_rest_field callback signature
+	public function update( mixed $value, \WP_Post $post, string $field, WP_REST_Request $request ): bool|\WP_Error { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter -- $field and $request required by register_rest_field callback signature
 		if ( ! is_array( $value ) ) {
 			return new \WP_Error(
 				'term_order_invalid',
@@ -141,7 +141,7 @@ final class RestField {
 	 *
 	 * @return true|\WP_Error
 	 */
-	private function validateTermIds( int $post_id, string $taxonomy, array $term_ids ): true|\WP_Error {
+	private function validateTermIds( int $post_id, string $taxonomy, array $term_ids ): bool|\WP_Error {
 		$assigned = wp_get_object_terms( $post_id, $taxonomy, [ 'fields' => 'ids' ] );
 
 		if ( is_wp_error( $assigned ) ) {

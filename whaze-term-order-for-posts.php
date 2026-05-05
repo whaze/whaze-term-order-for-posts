@@ -5,7 +5,7 @@
  * Description:       Order taxonomy terms individually per post, directly from the Gutenberg editor sidebar.
  * Version:           1.0.0
  * Requires at least: 6.0
- * Requires PHP:      8.0
+ * Requires PHP:      8.2
  * Author:            Jérôme Buquet
  * Author URI:        https://profiles.wordpress.org/whaze/
  * License:           GPL-2.0-or-later
