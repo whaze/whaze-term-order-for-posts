@@ -11,6 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use Whaze\TermOrderPerPost\Admin\SettingsPage;
+use Whaze\TermOrderPerPost\Admin\SettingsRegistration;
 use Whaze\TermOrderPerPost\BlockEditor\EditorAssets;
 use Whaze\TermOrderPerPost\OrderCleaner;
 use Whaze\TermOrderPerPost\OrderStorage;
@@ -18,31 +20,86 @@ use Whaze\TermOrderPerPost\Plugin;
 use Whaze\TermOrderPerPost\Registry;
 use Whaze\TermOrderPerPost\RestField;
 
-// Bootstrap: instantiate and register the plugin on `plugins_loaded`.
+// Shared references across the three bootstrap priority tiers.
+$whaze_term_order_for_posts_registry = null;
+$whaze_term_order_for_posts_storage  = null;
+
+// Priority 1: instantiate core services and expose globals so the public API functions work.
 add_action(
 	'plugins_loaded',
-	static function (): void {
-		$registry = new Registry();
-		$storage  = new OrderStorage();
+	static function () use ( &$whaze_term_order_for_posts_registry, &$whaze_term_order_for_posts_storage ): void {
+		$whaze_term_order_for_posts_registry = new Registry();
+		$whaze_term_order_for_posts_storage  = new OrderStorage();
+
+		$GLOBALS['whaze_term_order_for_posts_registry'] = $whaze_term_order_for_posts_registry;
+		$GLOBALS['whaze_term_order_for_posts_storage']  = $whaze_term_order_for_posts_storage;
+	},
+	1
+);
+
+// Priority 5: populate the registry from the admin-saved option before developer hooks run at priority 10.
+add_action(
+	'plugins_loaded',
+	static function () use ( &$whaze_term_order_for_posts_registry ): void {
+		if ( null === $whaze_term_order_for_posts_registry ) {
+			return;
+		}
+
+		$saved = get_option( SettingsRegistration::OPTION_KEY, [] );
+
+		if ( ! is_array( $saved ) ) {
+			return;
+		}
+
+		foreach ( $saved as $pair ) {
+			if ( ! isset( $pair['postType'], $pair['taxonomy'] )
+				|| ! is_string( $pair['postType'] )
+				|| ! is_string( $pair['taxonomy'] )
+			) {
+				continue;
+			}
+
+			$whaze_term_order_for_posts_registry->register(
+				sanitize_key( $pair['postType'] ),
+				sanitize_key( $pair['taxonomy'] )
+			);
+		}
+	},
+	5
+);
+
+// Priority 20: wire all hooks now that the registry is fully populated.
+add_action(
+	'plugins_loaded',
+	static function () use ( &$whaze_term_order_for_posts_registry, &$whaze_term_order_for_posts_storage ): void {
+		if ( null === $whaze_term_order_for_posts_registry || null === $whaze_term_order_for_posts_storage ) {
+			return;
+		}
+
+		$settings_registration = new SettingsRegistration();
+		$settings_page         = new SettingsPage(
+			$whaze_term_order_for_posts_registry,
+			WHAZE_TERM_ORDER_FOR_POSTS_DIR,
+			WHAZE_TERM_ORDER_FOR_POSTS_URL
+		);
 
 		$plugin = new Plugin(
-			$registry,
-			$storage,
-			new OrderCleaner( $storage, $registry ),
-			new RestField( $registry, $storage ),
+			$whaze_term_order_for_posts_registry,
+			$whaze_term_order_for_posts_storage,
+			new OrderCleaner( $whaze_term_order_for_posts_storage, $whaze_term_order_for_posts_registry ),
+			new RestField( $whaze_term_order_for_posts_registry, $whaze_term_order_for_posts_storage ),
 			new EditorAssets(
-				$registry,
+				$whaze_term_order_for_posts_registry,
 				WHAZE_TERM_ORDER_FOR_POSTS_DIR,
 				WHAZE_TERM_ORDER_FOR_POSTS_URL
 			),
+			$settings_registration,
+			$settings_page,
 		);
 
 		$plugin->register();
-
-		// Store the registry globally so public functions can access it.
-		$GLOBALS['whaze_term_order_for_posts_registry'] = $registry;
-		$GLOBALS['whaze_term_order_for_posts_storage']  = $storage;
-	}
+	},
+	20
 );
 
 /**

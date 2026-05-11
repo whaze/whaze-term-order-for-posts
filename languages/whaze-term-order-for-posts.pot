@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-04-30T10:20:56+00:00\n"
+"POT-Creation-Date: 2026-05-11T11:26:00+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: whaze-term-order-for-posts\n"
@@ -39,7 +39,28 @@ msgstr ""
 msgid "https://profiles.wordpress.org/whaze/"
 msgstr ""
 
-#: src/functions.php:60
+#: src/Admin/SettingsPage.php:51
+#: src/Admin/SettingsPage.php:52
+msgid "Term Order for Posts"
+msgstr ""
+
+#: src/Admin/SettingsRegistration.php:38
+msgid "Post type / taxonomy pairs with custom term ordering enabled."
+msgstr ""
+
+#. translators: 1: post type slug, 2: taxonomy slug
+#: src/Admin/SettingsRegistration.php:97
+#, php-format
+msgid "Invalid post type or taxonomy: \"%1$s\" / \"%2$s\". The pair was not saved."
+msgstr ""
+
+#. translators: 1: taxonomy slug, 2: post type slug
+#: src/Admin/SettingsRegistration.php:111
+#, php-format
+msgid "Taxonomy \"%1$s\" is not registered for post type \"%2$s\". The pair was not saved."
+msgstr ""
+
+#: src/functions.php:117
 msgid "whaze_term_order_for_posts_register() must be called after the plugins_loaded hook."
 msgstr ""
 
@@ -65,6 +86,44 @@ msgstr ""
 #: src/RestField.php:159
 #, php-format
 msgid "The following term IDs are not assigned to this post in taxonomy \"%1$s\": %2$s"
+msgstr ""
+
+#: assets/src/admin/RegistrationsMatrix.js:32
+msgid "No post types with UI-visible taxonomies found."
+msgstr ""
+
+#: assets/src/admin/RegistrationsMatrix.js:66
+msgid "Registered via code"
+msgstr ""
+
+#: assets/src/admin/SettingsApp.js:29
+msgid "Settings saved."
+msgstr ""
+
+#. translators: %s: error message
+#: assets/src/admin/SettingsApp.js:36
+#, js-format
+msgid "Could not save settings: %s"
+msgstr ""
+
+#: assets/src/admin/SettingsApp.js:41
+msgid "Unknown error."
+msgstr ""
+
+#: assets/src/admin/SettingsApp.js:51
+msgid "Term Order for Posts — Settings"
+msgstr ""
+
+#: assets/src/admin/SettingsApp.js:68
+msgid "Post type / taxonomy pairs"
+msgstr ""
+
+#: assets/src/admin/SettingsApp.js:74
+msgid "Enable term ordering for each post type and taxonomy combination. Pairs registered via code are shown as read-only."
+msgstr ""
+
+#: assets/src/admin/SettingsApp.js:93
+msgid "Save Settings"
 msgstr ""
 
 #: assets/src/components/SortableTermList.js:59

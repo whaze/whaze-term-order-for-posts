@@ -13,6 +13,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use Whaze\TermOrderPerPost\Admin\SettingsPage;
+use Whaze\TermOrderPerPost\Admin\SettingsRegistration;
 use Whaze\TermOrderPerPost\BlockEditor\EditorAssets;
 
 /**
@@ -23,11 +25,13 @@ final class Plugin {
 	/**
 	 * Injects dependencies.
 	 *
-	 * @param Registry     $registry      Stores post type / taxonomy registrations.
-	 * @param OrderStorage $storage       Reads and writes term order data.
-	 * @param OrderCleaner $cleaner       Keeps order in sync on term changes.
-	 * @param RestField    $rest_field    Registers the REST API field.
-	 * @param EditorAssets $editor_assets Enqueues the block editor script.
+	 * @param Registry             $registry               Stores post type / taxonomy registrations.
+	 * @param OrderStorage         $storage                Reads and writes term order data.
+	 * @param OrderCleaner         $cleaner                Keeps order in sync on term changes.
+	 * @param RestField            $rest_field             Registers the REST API field.
+	 * @param EditorAssets         $editor_assets          Enqueues the block editor script.
+	 * @param SettingsRegistration $settings_registration  Registers the settings option.
+	 * @param SettingsPage         $settings_page          Registers the admin settings page.
 	 */
 	public function __construct(
 		private readonly Registry $registry,
@@ -35,6 +39,8 @@ final class Plugin {
 		private readonly OrderCleaner $cleaner,
 		private readonly RestField $rest_field,
 		private readonly EditorAssets $editor_assets,
+		private readonly SettingsRegistration $settings_registration,
+		private readonly SettingsPage $settings_page,
 	) {}
 
 	/**
@@ -46,6 +52,11 @@ final class Plugin {
 		add_action( 'rest_api_init', [ $this->rest_field, 'register' ] );
 		add_action( 'set_object_terms', [ $this->cleaner, 'onSetObjectTerms' ], 10, 6 );
 		add_action( 'enqueue_block_editor_assets', [ $this->editor_assets, 'enqueue' ] );
+
+		add_action( 'admin_init', [ $this->settings_registration, 'registerSetting' ] );
+		add_action( 'rest_api_init', [ $this->settings_registration, 'registerSetting' ] );
+		add_action( 'admin_menu', [ $this->settings_page, 'addMenuPage' ] );
+		add_action( 'admin_enqueue_scripts', [ $this->settings_page, 'enqueueAssets' ] );
 	}
 
 	/**
