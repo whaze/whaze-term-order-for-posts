@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Whaze Term Order for Posts 1.0.0\n"
+"Project-Id-Version: Whaze Term Order for Posts 1.2.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/whaze-term-order-for-posts\n"
 "Last-Translator: \n"
 "Language-Team: Français\n"
@@ -35,7 +35,7 @@ msgstr ""
 msgid "https://profiles.wordpress.org/whaze/"
 msgstr ""
 
-#: src/functions.php:117
+#: src/functions.php:123
 msgid "whaze_term_order_for_posts_register() must be called after the plugins_loaded hook."
 msgstr "whaze_term_order_for_posts_register() doit être appelée après le hook plugins_loaded."
 
@@ -89,18 +89,22 @@ msgstr ""
 msgid "Term Order for Posts"
 msgstr "Ordre des termes par article"
 
-#: src/Admin/SettingsRegistration.php:38
+#: src/Admin/SettingsRegistration.php:43
+msgid "Automatically apply custom term order via wp_get_object_terms()."
+msgstr "Appliquer automatiquement l'ordre personnalisé des termes via wp_get_object_terms()."
+
+#: src/Admin/SettingsRegistration.php:54
 msgid "Post type / taxonomy pairs with custom term ordering enabled."
 msgstr "Paires type d'article / taxonomie avec ordonnancement personnalisé activé."
 
 #. translators: 1: post type slug, 2: taxonomy slug
-#: src/Admin/SettingsRegistration.php:97
+#: src/Admin/SettingsRegistration.php:113
 #, php-format
 msgid "Invalid post type or taxonomy: \"%1$s\" / \"%2$s\". The pair was not saved."
 msgstr "Type d'article ou taxonomie invalide : « %1$s » / « %2$s ». La paire n'a pas été enregistrée."
 
 #. translators: 1: taxonomy slug, 2: post type slug
-#: src/Admin/SettingsRegistration.php:111
+#: src/Admin/SettingsRegistration.php:127
 #, php-format
 msgid "Taxonomy \"%1$s\" is not registered for post type \"%2$s\". The pair was not saved."
 msgstr "La taxonomie « %1$s » n'est pas enregistrée pour le type d'article « %2$s ». La paire n'a pas été enregistrée."
@@ -113,32 +117,44 @@ msgstr "Aucun type d'article avec des taxonomies visibles dans l'interface n'a �
 msgid "Registered via code"
 msgstr "Enregistré via le code"
 
-#: assets/src/admin/SettingsApp.js:29
+#: assets/src/admin/SettingsApp.js:44
 msgid "Settings saved."
 msgstr "Paramètres enregistrés."
 
 #. translators: %s: error message
-#: assets/src/admin/SettingsApp.js:36
+#: assets/src/admin/SettingsApp.js:51
 #, js-format
 msgid "Could not save settings: %s"
 msgstr "Impossible d'enregistrer les paramètres : %s"
 
-#: assets/src/admin/SettingsApp.js:41
+#: assets/src/admin/SettingsApp.js:56
 msgid "Unknown error."
 msgstr "Erreur inconnue."
 
-#: assets/src/admin/SettingsApp.js:51
+#: assets/src/admin/SettingsApp.js:66
 msgid "Term Order for Posts — Settings"
 msgstr "Ordre des termes par article — Paramètres"
 
-#: assets/src/admin/SettingsApp.js:68
+#: assets/src/admin/SettingsApp.js:83
 msgid "Post type / taxonomy pairs"
 msgstr "Paires type d'article / taxonomie"
 
-#: assets/src/admin/SettingsApp.js:74
+#: assets/src/admin/SettingsApp.js:89
 msgid "Enable term ordering for each post type and taxonomy combination. Pairs registered via code are shown as read-only."
 msgstr "Activez l'ordonnancement des termes pour chaque combinaison type d'article / taxonomie. Les paires enregistrées via le code sont affichées en lecture seule."
 
-#: assets/src/admin/SettingsApp.js:93
+#: assets/src/admin/SettingsApp.js:127
 msgid "Save Settings"
 msgstr "Enregistrer les paramètres"
+
+#: assets/src/admin/SettingsApp.js:102
+msgid "Frontend rendering"
+msgstr "Rendu frontend"
+
+#: assets/src/admin/SettingsApp.js:108
+msgid "Automatically apply custom order (native blocks, themes, REST API)"
+msgstr "Appliquer automatiquement l'ordre personnalisé (blocs natifs, thèmes, REST API)"
+
+#: assets/src/admin/SettingsApp.js:112
+msgid "Hooks into get_the_terms(). Applies to all registered pairs. No code required."
+msgstr "S'accroche à get_the_terms(). S'applique à toutes les paires enregistrées. Aucun code requis."

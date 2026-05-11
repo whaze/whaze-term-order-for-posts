@@ -1,16 +1,28 @@
 import { useState, useCallback } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
-import { Button, Notice, Panel, PanelBody } from '@wordpress/components';
+import {
+	Button,
+	CheckboxControl,
+	Notice,
+	Panel,
+	PanelBody,
+} from '@wordpress/components';
 import RegistrationsMatrix from './RegistrationsMatrix';
 
 const OPTION_KEY = 'whaze_term_order_for_posts_registrations';
+const AUTO_APPLY_KEY = 'whaze_term_order_for_posts_auto_apply';
 
 export default function SettingsApp() {
-	const { availableTypes, savedRegistrations, programmaticRegistrations } =
-		window.whazeTermOrderForPostsAdmin;
+	const {
+		availableTypes,
+		savedRegistrations,
+		programmaticRegistrations,
+		autoApply: savedAutoApply,
+	} = window.whazeTermOrderForPostsAdmin;
 
 	const [ registrations, setRegistrations ] = useState( savedRegistrations );
+	const [ autoApply, setAutoApply ] = useState( savedAutoApply );
 	const [ isSaving, setIsSaving ] = useState( false );
 	const [ notice, setNotice ] = useState( null );
 
@@ -22,7 +34,10 @@ export default function SettingsApp() {
 			await apiFetch( {
 				path: '/wp/v2/settings',
 				method: 'POST',
-				data: { [ OPTION_KEY ]: registrations },
+				data: {
+					[ OPTION_KEY ]: registrations,
+					[ AUTO_APPLY_KEY ]: autoApply,
+				},
 			} );
 			setNotice( {
 				type: 'success',
@@ -44,7 +59,7 @@ export default function SettingsApp() {
 		} finally {
 			setIsSaving( false );
 		}
-	}, [ registrations ] );
+	}, [ registrations, autoApply ] );
 
 	return (
 		<Panel
@@ -81,6 +96,25 @@ export default function SettingsApp() {
 					registrations={ registrations }
 					programmaticRegistrations={ programmaticRegistrations }
 					onChange={ setRegistrations }
+				/>
+			</PanelBody>
+			<PanelBody
+				title={ __(
+					'Frontend rendering',
+					'whaze-term-order-for-posts'
+				) }
+			>
+				<CheckboxControl
+					label={ __(
+						'Automatically apply custom order (native blocks, themes, REST API)',
+						'whaze-term-order-for-posts'
+					) }
+					help={ __(
+						'Hooks into get_the_terms(). Applies to all registered pairs. No code required.',
+						'whaze-term-order-for-posts'
+					) }
+					checked={ autoApply }
+					onChange={ setAutoApply }
 				/>
 			</PanelBody>
 			<PanelBody>

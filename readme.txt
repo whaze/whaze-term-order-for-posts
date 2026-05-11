@@ -4,7 +4,7 @@ Tags: taxonomy, terms, order, gutenberg, block editor
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 8.2
-Stable tag: 1.1.0
+Stable tag: 1.2.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,6 +34,7 @@ Retrieve ordered terms in templates or REST:
 **Features:**
 
 * Settings page to configure post type / taxonomy pairs — no code needed.
+* Opt-in auto-apply: custom order applied automatically to native blocks, classic theme functions, and any code using `get_the_terms()` — no template changes required.
 * Drag-and-drop reordering panel in the block editor sidebar.
 * Order saved automatically with the post — no separate AJAX call.
 * Falls back to default WordPress term order when no custom order is set.
@@ -55,13 +56,20 @@ Yes. Select any registered post type and taxonomy in the settings page, or pass 
 
 = What happens if no order is defined for a post? =
 
-`whaze_term_order_for_posts_get_terms()` falls back to the standard `wp_get_object_terms()` result — the plugin is completely transparent.
+`whaze_term_order_for_posts_get_terms()` falls back to the standard `wp_get_object_terms()` result — the plugin is completely transparent. The auto-apply option also has no effect when no custom order is stored.
+
+= What does the auto-apply option cover? =
+
+It hooks into `get_the_terms()`, which is called by native blocks (`core/post-terms`), classic theme helpers (`the_category()`, `the_tags()`, `get_the_term_list()`, etc.), and any code that goes through that function. Direct calls to `wp_get_post_terms()` or `wp_get_object_terms()` are not affected — use `whaze_term_order_for_posts_get_terms()` for those.
 
 = Is this multisite compatible? =
 
 Yes. The order is stored as post meta and is therefore scoped to each site in the network.
 
 == Changelog ==
+
+= 1.2.0 =
+* Add opt-in auto-apply option: enable custom term order automatically for native blocks, classic theme functions, and any code using `get_the_terms()` — no template changes required.
 
 = 1.1.0 =
 * Add admin settings page (Settings → Term Order for Posts) to configure post type / taxonomy pairs without writing code.
@@ -71,6 +79,9 @@ Yes. The order is stored as post meta and is therefore scoped to each site in th
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.2.0 =
+Adds an opt-in auto-apply option. No database changes. Fully backward-compatible.
 
 = 1.1.0 =
 Adds an admin settings page. No database changes. Fully backward-compatible.

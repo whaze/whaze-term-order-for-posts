@@ -100,6 +100,7 @@ final class SettingsPage {
 				'availableTypes'            => ( new AvailableTypesProvider() )->get(),
 				'savedRegistrations'        => get_option( SettingsRegistration::OPTION_KEY, [] ),
 				'programmaticRegistrations' => $this->resolveProgrammaticRegistrations(),
+				'autoApply'                 => (bool) get_option( SettingsRegistration::AUTO_APPLY_KEY, false ),
 			]
 		);
 
