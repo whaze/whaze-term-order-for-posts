@@ -35,7 +35,7 @@ msgstr ""
 msgid "https://profiles.wordpress.org/whaze/"
 msgstr ""
 
-#: src/functions.php:60
+#: src/functions.php:117
 msgid "whaze_term_order_for_posts_register() must be called after the plugins_loaded hook."
 msgstr "whaze_term_order_for_posts_register() doit être appelée après le hook plugins_loaded."
 
@@ -83,3 +83,62 @@ msgstr "%s (ordre)"
 #: whaze-term-order-for-posts.php
 msgid "https://github.com/whaze/whaze-term-order-for-posts"
 msgstr ""
+
+#: src/Admin/SettingsPage.php:51
+#: src/Admin/SettingsPage.php:52
+msgid "Term Order for Posts"
+msgstr "Ordre des termes par article"
+
+#: src/Admin/SettingsRegistration.php:38
+msgid "Post type / taxonomy pairs with custom term ordering enabled."
+msgstr "Paires type d'article / taxonomie avec ordonnancement personnalisé activé."
+
+#. translators: 1: post type slug, 2: taxonomy slug
+#: src/Admin/SettingsRegistration.php:97
+#, php-format
+msgid "Invalid post type or taxonomy: \"%1$s\" / \"%2$s\". The pair was not saved."
+msgstr "Type d'article ou taxonomie invalide : « %1$s » / « %2$s ». La paire n'a pas été enregistrée."
+
+#. translators: 1: taxonomy slug, 2: post type slug
+#: src/Admin/SettingsRegistration.php:111
+#, php-format
+msgid "Taxonomy \"%1$s\" is not registered for post type \"%2$s\". The pair was not saved."
+msgstr "La taxonomie « %1$s » n'est pas enregistrée pour le type d'article « %2$s ». La paire n'a pas été enregistrée."
+
+#: assets/src/admin/RegistrationsMatrix.js:32
+msgid "No post types with UI-visible taxonomies found."
+msgstr "Aucun type d'article avec des taxonomies visibles dans l'interface n'a été trouvé."
+
+#: assets/src/admin/RegistrationsMatrix.js:66
+msgid "Registered via code"
+msgstr "Enregistré via le code"
+
+#: assets/src/admin/SettingsApp.js:29
+msgid "Settings saved."
+msgstr "Paramètres enregistrés."
+
+#. translators: %s: error message
+#: assets/src/admin/SettingsApp.js:36
+#, js-format
+msgid "Could not save settings: %s"
+msgstr "Impossible d'enregistrer les paramètres : %s"
+
+#: assets/src/admin/SettingsApp.js:41
+msgid "Unknown error."
+msgstr "Erreur inconnue."
+
+#: assets/src/admin/SettingsApp.js:51
+msgid "Term Order for Posts — Settings"
+msgstr "Ordre des termes par article — Paramètres"
+
+#: assets/src/admin/SettingsApp.js:68
+msgid "Post type / taxonomy pairs"
+msgstr "Paires type d'article / taxonomie"
+
+#: assets/src/admin/SettingsApp.js:74
+msgid "Enable term ordering for each post type and taxonomy combination. Pairs registered via code are shown as read-only."
+msgstr "Activez l'ordonnancement des termes pour chaque combinaison type d'article / taxonomie. Les paires enregistrées via le code sont affichées en lecture seule."
+
+#: assets/src/admin/SettingsApp.js:93
+msgid "Save Settings"
+msgstr "Enregistrer les paramètres"

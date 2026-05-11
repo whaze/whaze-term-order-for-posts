@@ -56,7 +56,10 @@ function SortableTermItem( { termId, name } ) {
 			{ ...listeners }
 		>
 			<span
-				aria-label={ __( 'Drag to reorder', 'whaze-term-order-for-posts' ) }
+				aria-label={ __(
+					'Drag to reorder',
+					'whaze-term-order-for-posts'
+				) }
 				style={ { color: '#757575', lineHeight: 1, flexShrink: 0 } }
 			>
 				⠿

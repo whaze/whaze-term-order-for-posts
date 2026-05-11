@@ -3,7 +3,7 @@
     <description>PHPCS rules for Term Order Per Post plugin</description>
 
     <file>src</file>
-    <file>term-order-per-post.php</file>
+    <file>whaze-term-order-for-posts.php</file>
 
     <arg name="extensions" value="php"/>
     <arg value="sp"/>
@@ -15,7 +15,8 @@
     <rule ref="WordPress.NamingConventions.PrefixAllGlobals">
         <properties>
             <property name="prefixes" type="array">
-                <element value="term_order_per_post"/>
+                <element value="whaze_term_order_for_posts"/>
+                <element value="WHAZE_TERM_ORDER_FOR_POSTS"/>
                 <element value="Whaze\TermOrderPerPost"/>
             </property>
         </properties>
@@ -24,7 +25,7 @@
     <rule ref="WordPress.WP.I18n">
         <properties>
             <property name="text_domain" type="array">
-                <element value="term-order-per-post"/>
+                <element value="whaze-term-order-for-posts"/>
             </property>
         </properties>
     </rule>
