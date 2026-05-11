@@ -1,10 +1,10 @@
 # Whaze Term Order for Posts
 
-A WordPress plugin that lets developers enable per-post custom ordering of taxonomy terms, directly from the Gutenberg editor sidebar.
+A WordPress plugin that enables per-post custom ordering of taxonomy terms, directly from the Gutenberg editor sidebar.
 
 ## Requirements
 
-- PHP 8.0+
+- PHP 8.2+
 - WordPress 6.0+
 
 ## Installation
@@ -17,7 +17,13 @@ npm run build
 
 ## Usage
 
-Register a post type / taxonomy combination (on `init` or later):
+### Via the admin settings page
+
+Go to **Settings → Term Order for Posts** to enable term ordering for any post type / taxonomy combination — no code required.
+
+### Via code (optional)
+
+Register a post type / taxonomy combination programmatically (on `init` or later):
 
 ```php
 add_action( 'init', function () {
@@ -26,11 +32,15 @@ add_action( 'init', function () {
 } );
 ```
 
-Retrieve ordered terms:
+Programmatic registrations are merged with admin-saved ones and shown as read-only in the settings page.
+
+### Retrieve ordered terms
 
 ```php
 $terms = whaze_term_order_for_posts_get_terms( get_the_ID(), 'category' );
 ```
+
+Falls back to `wp_get_object_terms()` if no custom order is defined.
 
 ## REST API
 
@@ -44,7 +54,7 @@ The `term_order` field is added to the REST response for all registered post typ
 }
 ```
 
-It is readable and writable.
+Readable and writable via `PATCH /wp/v2/posts/:id`.
 
 ## Development
 
@@ -64,8 +74,8 @@ npm run start
 # JS lint
 npm run lint:js
 
-# Generate .pot file (requires WP-CLI)
-npm run make-pot
+# Generate .pot + update translations (requires WP-CLI)
+npm run i18n
 ```
 
 ## Licence
