@@ -3,7 +3,7 @@
  * Plugin Name:       Whaze Term Order for Posts
  * Plugin URI:        https://github.com/whaze/whaze-term-order-for-posts
  * Description:       Order taxonomy terms individually per post, directly from the Gutenberg editor sidebar.
- * Version:           1.1.0
+ * Version:           1.2.0
  * Requires at least: 6.0
  * Requires PHP:      8.2
  * Author:            Jérôme Buquet

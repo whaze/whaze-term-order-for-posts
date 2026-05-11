@@ -34,13 +34,19 @@ add_action( 'init', function () {
 
 Programmatic registrations are merged with admin-saved ones and shown as read-only in the settings page.
 
-### Retrieve ordered terms
+### Auto-apply (opt-in)
+
+Enable **Automatically apply custom order** in **Settings → Term Order for Posts → Frontend rendering**.
+
+When active, the custom order is applied automatically everywhere `get_the_terms()` is called — native blocks (`core/post-terms`), classic theme functions (`the_category()`, `the_tags()`, `get_the_term_list()`, …) — with no code changes required.
+
+### Retrieve ordered terms (manual)
 
 ```php
 $terms = whaze_term_order_for_posts_get_terms( get_the_ID(), 'category' );
 ```
 
-Falls back to `wp_get_object_terms()` if no custom order is defined.
+Falls back to `wp_get_object_terms()` if no custom order is defined. Use this when auto-apply is off or for code that calls `wp_get_post_terms()` directly.
 
 ## REST API
 

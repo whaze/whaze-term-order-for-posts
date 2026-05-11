@@ -24,12 +24,28 @@ final class SettingsRegistration {
 	public const OPTION_KEY = 'whaze_term_order_for_posts_registrations';
 
 	/**
+	 * WordPress option key for the auto-apply filter toggle.
+	 */
+	public const AUTO_APPLY_KEY = 'whaze_term_order_for_posts_auto_apply';
+
+	/**
 	 * Register the option with the Settings API and expose it via the REST API.
 	 *
 	 * Must be called on both `admin_init` (Settings form / UI) and `rest_api_init`
 	 * (so the option appears in and is writable via wp/v2/settings).
 	 */
 	public function registerSetting(): void {
+		register_setting(
+			'whaze_term_order_for_posts',
+			self::AUTO_APPLY_KEY,
+			[
+				'type'         => 'boolean',
+				'description'  => __( 'Automatically apply custom term order via wp_get_object_terms().', 'whaze-term-order-for-posts' ),
+				'default'      => false,
+				'show_in_rest' => true,
+			]
+		);
+
 		register_setting(
 			'whaze_term_order_for_posts',
 			self::OPTION_KEY,

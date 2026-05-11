@@ -19,6 +19,7 @@ use Whaze\TermOrderPerPost\OrderStorage;
 use Whaze\TermOrderPerPost\Plugin;
 use Whaze\TermOrderPerPost\Registry;
 use Whaze\TermOrderPerPost\RestField;
+use Whaze\TermOrderPerPost\TermsFilter;
 
 // Shared references across the three bootstrap priority tiers.
 $whaze_term_order_for_posts_registry = null;
@@ -83,6 +84,10 @@ add_action(
 			WHAZE_TERM_ORDER_FOR_POSTS_URL
 		);
 
+		$terms_filter = (bool) get_option( SettingsRegistration::AUTO_APPLY_KEY, false )
+			? new TermsFilter( $whaze_term_order_for_posts_registry, $whaze_term_order_for_posts_storage )
+			: null;
+
 		$plugin = new Plugin(
 			$whaze_term_order_for_posts_registry,
 			$whaze_term_order_for_posts_storage,
@@ -95,6 +100,7 @@ add_action(
 			),
 			$settings_registration,
 			$settings_page,
+			$terms_filter,
 		);
 
 		$plugin->register();

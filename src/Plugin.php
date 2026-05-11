@@ -16,6 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 use Whaze\TermOrderPerPost\Admin\SettingsPage;
 use Whaze\TermOrderPerPost\Admin\SettingsRegistration;
 use Whaze\TermOrderPerPost\BlockEditor\EditorAssets;
+use Whaze\TermOrderPerPost\TermsFilter;
 
 /**
  * Orchestrates all plugin hooks.
@@ -32,6 +33,7 @@ final class Plugin {
 	 * @param EditorAssets         $editor_assets          Enqueues the block editor script.
 	 * @param SettingsRegistration $settings_registration  Registers the settings option.
 	 * @param SettingsPage         $settings_page          Registers the admin settings page.
+	 * @param TermsFilter|null     $terms_filter           Auto-apply filter; null when opt-in is disabled.
 	 */
 	public function __construct(
 		private readonly Registry $registry,
@@ -41,6 +43,7 @@ final class Plugin {
 		private readonly EditorAssets $editor_assets,
 		private readonly SettingsRegistration $settings_registration,
 		private readonly SettingsPage $settings_page,
+		private readonly ?TermsFilter $terms_filter = null,
 	) {}
 
 	/**
@@ -57,6 +60,10 @@ final class Plugin {
 		add_action( 'rest_api_init', [ $this->settings_registration, 'registerSetting' ] );
 		add_action( 'admin_menu', [ $this->settings_page, 'addMenuPage' ] );
 		add_action( 'admin_enqueue_scripts', [ $this->settings_page, 'enqueueAssets' ] );
+
+		if ( null !== $this->terms_filter ) {
+			$this->terms_filter->register();
+		}
 	}
 
 	/**
